@@ -1,0 +1,258 @@
+$background: #f5f7f6;
+$surface: #fff;
+$ink: #24312d;
+$muted: #54635d;
+$border: #d0d7de;
+$accent: #24604f;
+$selected: #eaf3ef;
+$error: #a12632;
+$small: 540px;
+
+@mixin frame($radius: 5px) {
+  border: 1px solid $border;
+  border-radius: $radius;
+}
+
+:root {
+  color-scheme: light;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  color: $ink;
+  background: $background;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body, h1, h2, p, fieldset, ul {
+  margin: 0;
+}
+
+.page {
+  width: min(740px, calc(100% - 40px));
+  margin: 48px auto;
+}
+
+.page-header, .board-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.page-header {
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.125rem;
+}
+
+.progress {
+  color: $muted;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+
+  strong {
+    color: $accent;
+  }
+}
+
+.task-form, .task-board {
+  @include frame(6px);
+  background: $surface;
+}
+
+.task-form {
+  margin-bottom: 14px;
+  padding: 18px;
+
+  > label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+}
+
+.form-row {
+  display: flex;
+  gap: 8px;
+}
+
+input[type="text"], button {
+  @include frame;
+  min-height: 42px;
+  padding: 8px 12px;
+  color: inherit;
+  font: inherit;
+}
+
+input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  background: $surface;
+
+  &::placeholder {
+    color: $muted;
+  }
+
+  &[aria-invalid="true"] {
+    border-color: $error;
+  }
+}
+
+button {
+  background: $surface;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-button {
+  border-color: $accent;
+  color: $surface;
+  background: $accent;
+
+  &:hover {
+    background: #1c4b3d;
+  }
+}
+
+.task-error {
+  margin-top: 8px;
+  color: $error;
+  font-size: 0.875rem;
+
+  &:empty {
+    margin: 0;
+  }
+}
+
+.board-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid $border;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+
+  label {
+    @include frame(4px);
+    padding: 5px 9px;
+    border-color: transparent;
+    color: $muted;
+    font-size: 0.875rem;
+    cursor: pointer;
+
+    &:hover {
+      background: $background;
+    }
+  }
+
+  input:checked + label {
+    border-color: $border;
+    color: $accent;
+    background: $selected;
+  }
+}
+
+.sr-only, .filters input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:focus-visible, .filters input:focus-visible + label {
+  outline: 2px solid $accent;
+  outline-offset: 2px;
+}
+
+.task-list {
+  padding: 0;
+  list-style: none;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 18px;
+
+  + .task {
+    border-top: 1px solid $border;
+  }
+}
+
+.task-toggle {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  min-height: 40px;
+  padding: 4px 0;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+
+  input {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: $accent;
+    cursor: inherit;
+  }
+
+  input:checked + span {
+    color: $muted;
+    text-decoration: line-through;
+  }
+}
+
+.delete-button {
+  min-height: 36px;
+  color: $muted;
+
+  &:hover {
+    color: $error;
+    background: $background;
+  }
+}
+
+.empty {
+  padding: 16px 18px;
+  color: $muted;
+}
+
+@media (max-width: $small) {
+  .page {
+    width: calc(100% - 24px);
+    margin: 24px auto;
+  }
+
+  .board-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .task-form, .board-header, .task, .empty {
+    padding-inline: 12px;
+  }
+}

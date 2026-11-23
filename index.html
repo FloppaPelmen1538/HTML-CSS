@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Список дел</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <h1>Список дел</h1>
+      <p class="progress" role="status">Выполнено <strong id="done-count">0</strong> из <span id="total-count">0</span></p>
+    </header>
+
+    <form class="task-form" id="task-form" novalidate>
+      <label for="task-name">Новое дело</label>
+      <div class="form-row">
+        <input id="task-name" type="text" maxlength="100" autocomplete="off" required
+          placeholder="Забрать книгу" aria-describedby="task-error">
+        <button class="add-button" type="submit">Добавить</button>
+      </div>
+      <p id="task-error" class="task-error" role="status"></p>
+    </form>
+
+    <section class="task-board" aria-labelledby="tasks-title">
+      <header class="board-header">
+        <h2 id="tasks-title">Мои дела</h2>
+        <fieldset class="filters">
+          <legend class="sr-only">Показать дела</legend>
+          <input id="filter-all" type="radio" name="filter" value="all" checked>
+          <label for="filter-all">Все</label>
+          <input id="filter-open" type="radio" name="filter" value="open">
+          <label for="filter-open">Активные</label>
+          <input id="filter-done" type="radio" name="filter" value="done">
+          <label for="filter-done">Выполненные</label>
+        </fieldset>
+      </header>
+      <ul class="task-list" id="task-list"></ul>
+      <p class="empty" id="empty-list" hidden></p>
+    </section>
+
+    <noscript><p>Для работы списка включите JavaScript.</p></noscript>
+  </main>
+
+  <template id="task-row">
+    <li class="task">
+      <label class="task-toggle">
+        <input type="checkbox">
+        <span></span>
+      </label>
+      <button class="delete-button" type="button">Удалить</button>
+    </li>
+  </template>
+</body>
+</html>
